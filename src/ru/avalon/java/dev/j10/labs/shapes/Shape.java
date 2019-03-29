@@ -21,7 +21,7 @@ public interface Shape {
      * @return угол
      */
      default int randomRotation(){         
-        int rotation =  new Random().nextInt(361)+0;
+        int rotation =  new Random().nextInt(360)+1;
         return rotation;
      }
      
