@@ -1,5 +1,7 @@
 package ru.avalon.java.dev.j10.labs.shapes;
 
+import java.util.Random;
+
 /**
  * Абстрактное представление о геометрической фигуре.
  * <p>
@@ -13,15 +15,31 @@ package ru.avalon.java.dev.j10.labs.shapes;
  * @see <a href="https://ru.wikipedia.org/wiki/%D0%A4%D0%B8%D0%B3%D1%83%D1%80%D0%B0_(%D0%B3%D0%B5%D0%BE%D0%BC%D0%B5%D1%82%D1%80%D0%B8%D1%8F)">Фигура (геометрия)</a>
  */
 public interface Shape {
-
-    /*
-     * TODO: Закончить определение интерфейса 'Shape'
+      /**
+     * Возвращает случайный угол
      *
-     * 1. Включите интерфейс в общую систему типов.
-     *
-     * 2. При необходимости, дополните структуру интерфеса.
+     * @return угол
      */
-
+     default int randomRotation(){         
+        int rotation =  new Random().nextInt(361)+0;
+        return rotation;
+     }
+     
+     /**
+     * Перемещает точку на заданный угол относительно другой точки
+     *
+     * @return новая точка
+     */
+     default Point2D movePointByAngle(Point2D point, Point2D relativePoint, double rad){
+        float x = point.getX() - relativePoint.getX();
+        float y = point.getY() - relativePoint.getY();
+        float x1 = (float) (x * Math.cos(rad) - y * Math.sin(rad));
+        float y1 = (float) (x * Math.sin(rad) + y * Math.cos(rad));
+        float xEnd = x1 + relativePoint.getX();
+        float yEnd  = y1 + relativePoint.getY();
+        Point2D rotate = new Point2D(xEnd,yEnd);
+        return rotate;
+    }
     /**
      * Возвращает площадь фигуры.
      * <p>
@@ -48,12 +66,7 @@ public interface Shape {
      *
      * @return угол поворота фигуры.
      */
-    int getRotation();
-
-    /*
-     * TODO: изменить определение метотода 'getRotation()'
-     * Измените определение метода таким образом, чтобы
-     * классам, не поддерживающим вращение, не требовалось
-     * переопределять данный метод.
-     */
+   default int getRotation() {
+        return 0;
+    }
 }
